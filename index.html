@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WASM Trap 实验室</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>WASM Trap 实验室</h1>
+    <div id="features" class="features"></div>
+    <div id="heartbeat" class="heartbeat">主线程心跳 —</div>
+  </header>
+
+  <main>
+    <section class="panel controls">
+      <h2>触发 trap（在 Worker 中执行）</h2>
+      <div class="btn-grid">
+        <button data-trap="oob">越界访问<br><code>wrapper_oob(0x1FFF0)</code></button>
+        <button data-trap="divzero">除零<br><code>div_zero(1, 0)</code></button>
+        <button data-trap="divoverflow">除法溢出<br><code>div_zero(INT_MIN, -1)</code></button>
+        <button data-trap="badconvert">非法转换<br><code>invalid_convert(NaN)</code></button>
+        <button data-trap="stackoverflow">栈溢出<br><code>recurse(1)</code></button>
+      </div>
+      <div class="row">
+        <button id="btn-run-all" class="primary">运行全部 trap</button>
+        <button id="btn-reinstantiate">重新实例化 wasm</button>
+        <button id="btn-clear-history">清空历史</button>
+      </div>
+      <div class="row opts">
+        <label><input type="checkbox" id="opt-simulate" /> JS 模拟 trap（无 wasm 降级路径）</label>
+        <label><input type="checkbox" id="opt-nosourcemap" /> 模拟源码映射缺失</label>
+      </div>
+      <p class="hint">
+        说明：trap 在 Web Worker 中触发并捕获，归一化为纯数据报告后经 postMessage 传到主线程，
+        存入 IndexedDB 并用 Canvas 可视化。运行期间右上角心跳持续走动，证明主线程不被阻塞。
+      </p>
+    </section>
+
+    <section class="panel viz-panel">
+      <div class="tabs">
+        <button class="tab active" data-view="memory">内存</button>
+        <button class="tab" data-view="callstack">调用栈</button>
+        <button class="tab" data-view="compare">类型对比</button>
+        <button class="tab" data-view="timeline">历史时间线</button>
+      </div>
+      <canvas id="viz" width="720" height="420"></canvas>
+    </section>
+
+    <section class="panel report">
+      <h2>trap 报告</h2>
+      <div id="report-detail"><p class="hint">点击左侧按钮触发一个 trap。</p></div>
+    </section>
+
+    <section class="panel log-panel">
+      <h2>日志</h2>
+      <div id="log"></div>
+    </section>
+  </main>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
