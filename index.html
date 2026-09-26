@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Wasm Trap Lab — 越界 / 除零 / 非法转换 / 栈溢出</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>Wasm Trap Lab</h1>
+  <span id="fps" class="fps">主线程 FPS: —</span>
+</header>
+
+<section class="panel">
+  <h2>特性检测</h2>
+  <div class="badges">
+    <span id="feat-wasm" class="badge">…</span>
+    <span id="feat-eh" class="badge">…</span>
+    <span id="feat-stack" class="badge">…</span>
+    <span id="feat-worker-stack" class="badge">…</span>
+    <span id="feat-srcmap" class="badge">…</span>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>触发 Trap（默认在 Worker 中执行）</h2>
+  <div class="controls">
+    <button data-trap="oob" class="t-oob">越界访问</button>
+    <button data-trap="div" class="t-div">除零</button>
+    <button data-trap="cvt" class="t-cvt">非法转换</button>
+    <button data-trap="rec" class="t-rec">栈溢出</button>
+    <button id="btn-all">全部运行并对比</button>
+  </div>
+  <div class="controls opts">
+    <label><input type="checkbox" id="opt-js-fallback"> 降级：JS 模拟 trap（无 EH 提案 / 无 wasm）</label>
+    <label><input type="checkbox" id="opt-no-srcmap"> 模拟源码映射缺失</label>
+    <label><input type="checkbox" id="opt-no-stack"> 模拟栈回溯缺失</label>
+    <label><input type="checkbox" id="opt-propagate" checked> 跨 Worker 传播 (A→主线程→B)</label>
+    <label><input type="checkbox" id="opt-main-thread"> 在主线程运行（对照）</label>
+  </div>
+  <div class="controls">
+    <button id="btn-clone">探测 Error 结构化克隆</button>
+    <button id="btn-clear">清空 IndexedDB 历史</button>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Trap 报告</h2>
+  <pre id="report">尚未运行。</pre>
+</section>
+
+<section class="panel">
+  <h2>类型对比</h2>
+  <canvas id="cmp-canvas" class="canvas" style="height:220px"></canvas>
+</section>
+
+<section class="panel">
+  <h2>栈回溯瀑布</h2>
+  <canvas id="stack-canvas" class="canvas" style="height:240px"></canvas>
+</section>
+
+<section class="panel">
+  <h2>事件时间线（IndexedDB）</h2>
+  <canvas id="timeline-canvas" class="canvas" style="height:90px"></canvas>
+  <ul id="history" class="history"></ul>
+</section>
+
+<section class="panel">
+  <h2>日志</h2>
+  <pre id="log" class="log"></pre>
+</section>
+
+<script src="js/wasm-gen.js"></script>
+<script src="js/trap-core.js"></script>
+<script src="js/db.js"></script>
+<script src="js/viz.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

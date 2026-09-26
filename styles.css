@@ -1,0 +1,35 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 16px; max-width: 1100px; margin-inline: auto;
+  background: #0d1117; color: #cfd6e4;
+  font: 14px/1.5 system-ui, sans-serif;
+}
+header { display: flex; align-items: baseline; gap: 16px; }
+h1 { font-size: 20px; margin: 8px 0; }
+h2 { font-size: 14px; margin: 0 0 8px; color: #8b95a9; text-transform: uppercase; letter-spacing: .05em; }
+.fps { margin-left: auto; color: #3fae6a; font-family: ui-monospace, monospace; }
+.panel {
+  background: #131826; border: 1px solid #232b3d; border-radius: 8px;
+  padding: 12px 16px; margin: 12px 0;
+}
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; background: #333; }
+.badge.ok { background: #1d4d33; color: #7fe0a8; }
+.badge.bad { background: #5a2a2a; color: #f0a0a0; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0; }
+.opts label { font-size: 13px; color: #9aa4b8; display: flex; align-items: center; gap: 4px; }
+button {
+  background: #1f2740; color: #cfd6e4; border: 1px solid #33405f;
+  border-radius: 6px; padding: 6px 14px; cursor: pointer; font-size: 13px;
+}
+button:hover { background: #283354; }
+.t-oob { border-color: #e05252; } .t-div { border-color: #e08a3c; }
+.t-cvt { border-color: #b06fd6; } .t-rec { border-color: #3f8fe0; }
+pre#report {
+  background: #0a0e18; border-radius: 6px; padding: 12px; overflow: auto;
+  font: 12px/1.6 ui-monospace, monospace; white-space: pre-wrap; margin: 0;
+}
+.canvas { width: 100%; display: block; background: #0a0e18; border-radius: 6px; }
+.history { font: 12px ui-monospace, monospace; color: #8b95a9; max-height: 140px; overflow: auto; }
+.log { font: 12px ui-monospace, monospace; color: #7d8699; max-height: 120px; overflow: auto; margin: 0; }
